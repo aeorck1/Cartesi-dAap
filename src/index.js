@@ -1,11 +1,9 @@
-// XXX even though ethers is not used in the code below, it's very likely
-// it will be used by any DApp, so we are already including it here
 const { ethers } = require("ethers");
 
 const rollup_server = process.env.ROLLUP_HTTP_SERVER_URL;
 console.log("HTTP rollup_server url is " + rollup_server);
 
-function  hex2str(hex) {
+function hex2str(hex) {
   return ethers.toUtf8String(hex)
 }
 
@@ -17,59 +15,91 @@ function isNumeric(num) {
   return !isNaN(num)
 }
 
-let users = []
-let toUpperTotal = 0
+let balances = {}
+let transactions = []
 
 async function handle_advance(data) {
   console.log("Received advance request data " + JSON.stringify(data));
  
-  const metadata =data["metadata"]
+  const metadata = data["metadata"]
   const sender = metadata["msg_sender"]
   const payload = data["payload"]
 
-  let sentence = hex2str(payload)
-  if(isNumeric(sentence)){
-
-    // Add error output
+  let txData = JSON.parse(hex2str(payload))
+  
+  if (!txData.to || !isNumeric(txData.amount)) {
     const report_req = await fetch(rollup_server + "/report", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ payload: str2hex("Sentence is not an hex") }),
+      body: JSON.stringify({ payload: str2hex("Invalid transaction data") }),
     });
-
     return "reject"
   }
-users.push(sender)
-toUpperTotal+=1
 
-sentence = sentence.toUpperCase()
-const notice_req = await fetch(rollup_server + "/notice", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({ payload : str2hex(sentence) }),
-});
+  const amount = parseFloat(txData.amount)
+  if (amount <= 0) {
+    const report_req = await fetch(rollup_server + "/report", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ payload: str2hex("Amount must be positive") }),
+    });
+    return "reject"
+  }
+
+  if (!balances[sender] || balances[sender] < amount) {
+    const report_req = await fetch(rollup_server + "/report", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ payload: str2hex("Insufficient balance") }),
+    });
+    return "reject"
+  }
+
+  balances[sender] -= amount
+  balances[txData.to] = (balances[txData.to] || 0) + amount
+
+  transactions.push({
+    from: sender,
+    to: txData.to,
+    amount: amount,
+    timestamp: new Date().toISOString()
+  })
+
+  const notice_req = await fetch(rollup_server + "/notice", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ payload: str2hex(`Transferred ${amount} tokens from ${sender} to ${txData.to}`) }),
+  });
   return "accept";
 }
 
 async function handle_inspect(data) {
   console.log("Received inspect request data " + JSON.stringify(data));
   
-  const payload =data ["payload"]
-  const route =hex2str(payload)
+  const payload = data["payload"]
+  const route = hex2str(payload)
   let responseObject
 
-  if (route ==="list"){
-responseObject=JSON.stringify({users})
+  if (route === "balances") {
+    responseObject = JSON.stringify(balances)
   }
-  else if (route ==="total"){
-responseObject=JSON.stringify({toUpperTotal})
+  else if (route === "transactions") {
+    responseObject = JSON.stringify(transactions)
   }
-  else{
-    responseObject ="route not implemented"
+  else if (route.startsWith("balance:")) {
+    const address = route.split(":")[1]
+    responseObject = JSON.stringify({ balance: balances[address] || 0 })
+  }
+  else {
+    responseObject = "route not implemented"
   }
 
   const report_req = await fetch(rollup_server + "/report", {
