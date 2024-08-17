@@ -1,22 +1,22 @@
-# 🚀 Decentralized Trivia Game on Cartesi
+# 🚀 Decentralized Token Transfer System on Cartesi
 
-Welcome to my first Web3 project! This is a decentralized trivia game built on top of Cartesi, where users can submit trivia questions, view a leaderboard, and track contributions in a fully decentralized manner.
+Welcome to my Web3 project! This is a decentralized token transfer system built on top of Cartesi, where users can transfer tokens, check balances, and view transaction history in a fully decentralized manner.
 
 ## 🌟 Features
 
-- **Submit Trivia Questions:** Users can submit questions that are converted to uppercase and stored on the blockchain.
-- **Leaderboard:** Track the top contributors by the number of questions they have submitted.
-- **Inspection Routes:** Check the total number of questions submitted and view the leaderboard directly from the app.
+- **Token Transfers:** Users can transfer tokens to other addresses securely on the blockchain.
+- **Balance Tracking:** Keep track of token balances for all addresses.
+- **Transaction History:** View a complete history of all token transfers.
+- **Inspection Routes:** Check individual balances, view all balances, and access transaction history directly from the app.
 
 ## 📚 How It Works
 
-1. **Submitting Questions:**
-   - Users submit questions as hexadecimal payloads.
-   - The app processes these questions, converts them to uppercase, and tracks the sender.
+1. **Transferring Tokens:**
+   - Users submit transfer requests with recipient address and amount.
+   - The app processes these transfers, updates balances, and records the transaction.
 
-2. **Inspecting the Leaderboard:**
-   - Users can inspect the leaderboard to see who the top contributors are.
-   - Alternatively, users can check the total number of questions submitted.
+2. **Inspecting Balances and Transactions:**
+   - Users can check individual address balances, view all balances, or access the full transaction history.
 
 3. **Decentralized and Transparent:**
    - All operations are handled in a decentralized environment using Cartesi's Rollups, ensuring transparency and trust.
@@ -27,83 +27,76 @@ Welcome to my first Web3 project! This is a decentralized trivia game built on t
 
 - Node.js
 - Cartesi Development Environment
+- DockerDesktop
 
 ### Installation
 
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/yourusername/decentralized-trivia-game.git
-   cd decentralized-trivia-game
-   ```
+   git clone https://github.com/yourusername/decentralized-token-transfer.git
+   cd decentralized-token-transfer```
+   
+   
 
 2. **Install Dependencies:**
+   ```npm install -g @cartesi/cli```
 
-   ```bash
-   npm install
-   ```
+   **Test if Cartesi is succefully installed on your PC**
+   ```cartesi doctor```
+      ✔ Your system is ready for cartesi.
 
-3. **Set Up Environment Variables:**
+3. **Run the Application:**
+   ```cartesi build```
 
-   - Create a `.env` file in the root directory and add the following:
+3. **Run the Application:**
+   ```cartesi run```
 
-   ```env
-   ROLLUP_HTTP_SERVER_URL=your_rollup_server_url
-   ```
+### 🛠️ Usage
 
-4. **Run the Application:**
+   **Transferring Tokens:**
 
-   ```bash
-   node app.js
-   ```
+      Send a request to the app's /advance endpoint with transfer details encoded in hexadecimal.
+      Example:
 
-## 🛠️ Usage
+      jsonCopy{
+      "payload": "0x7b22746f223a22307831323334222c22616d6f756e74223a3130307d"  // Hexadecimal for {"to":"0x1234","amount":100}
+      }
 
-- **Submitting a Question:**
+   **Checking Balances:**
 
-   - Send a request to the app's `/advance` endpoint with your question encoded in hexadecimal.
-   - Example:
+      Send a request to the app's /inspect endpoint with the payload "balances" or "balance:address".
+      Example:
 
-   ```json
-   {
-     "payload": "0x68656c6c6f20776f726c64"  // Hexadecimal for "hello world"
-   }
-   ```
+      jsonCopy{
+      "payload": "0x62616c616e6365733a307831323334"  // Hexadecimal for "balances:0x1234"
+      }
 
-- **Inspecting the Leaderboard:**
+   **Viewing Transaction History:**
 
-   - Send a request to the app's `/inspect` endpoint with the payload `"leaderboard"`.
-   - Example:
+      Send a request to the app's /inspect endpoint with the payload "transactions".
 
-   ```json
-   {
-     "payload": "0x6c6561646572626f617264"  // Hexadecimal for "leaderboard"
-   }
-   ```
 
-## 🎯 Roadmap
 
-- **Add Question Categories:** Allow users to categorize their trivia questions.
-- **Implement a Scoring System:** Introduce points and rewards for contributors.
-- **Smart Contract Integration:** Further decentralize the system by managing rewards and user interactions through smart contracts.
+### 🎯 Roadmap
 
-## 📄 License
+      Implement Token Minting: Allow creation of new tokens.
+      Add Token Burning Mechanism: Implement a way to remove tokens from circulation.
+      Introduce Staking: Develop a staking system for token holders.
+      Smart Contract Integration: Further decentralize the system by managing advanced features through smart contracts.
 
-This project is licensed under the MIT License.
+### 📄 License
 
-## 📢 Contributing
+      This project is licensed under the MIT License.
+      📢 Contributing
+      Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+     
+     
+### 🌐 Connect with Me
 
-Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+      Whatsapp: https://wa.me/+2349069983946 
+      Twitter: @godwinfinity
+      GitHub: https://github.com/aeorck1
 
-## 🌐 Connect with Me
 
-- **Twitter:** [@yourtwitterhandle](https://twitter.com/yourtwitterhandle)
-- **GitHub:** [yourgithubprofile](https://github.com/yourusername)
-
----
-
-Thank you for checking out my first Web3 project! I'm excited to share this journey with you all. 🚀
-
----
-
-Feel free to copy this entire text directly into your `README.md` file.
+      Thank you for checking out my Web3 project! I'm excited to share this journey with you all. 🚀
