@@ -1,13 +1,16 @@
-# 🚀 Decentralized Token Transfer System on Cartesi
+# 🚀 Enhanced NFT and Token Transfer System on Cartesi
 
-Welcome to my Web3 project! This is a decentralized token transfer system built on top of Cartesi, where users can transfer tokens, check balances, and view transaction history in a fully decentralized manner.
+Welcome to my Web3 project! This is a decentralized system built on top of Cartesi, enabling users to transfer tokens, mint and transfer NFTs, check balances, and view transaction history in a fully decentralized manner.
 
 ## 🌟 Features
 
 - **Token Transfers:** Users can transfer tokens to other addresses securely on the blockchain.
+- **NFT Minting:** Create unique Non-Fungible Tokens (NFTs) with custom metadata.
+- **NFT Transfers:** Transfer ownership of NFTs between addresses.
 - **Balance Tracking:** Keep track of token balances for all addresses.
-- **Transaction History:** View a complete history of all token transfers.
-- **Inspection Routes:** Check individual balances, view all balances, and access transaction history directly from the app.
+- **NFT Ownership:** Track ownership of all minted NFTs.
+- **Transaction History:** View a complete history of all token and NFT operations.
+- **Inspection Routes:** Check individual balances, view all balances, access transaction history, and query NFT data directly from the app.
 
 ## 📚 How It Works
 
@@ -15,10 +18,18 @@ Welcome to my Web3 project! This is a decentralized token transfer system built 
    - Users submit transfer requests with recipient address and amount.
    - The app processes these transfers, updates balances, and records the transaction.
 
-2. **Inspecting Balances and Transactions:**
-   - Users can check individual address balances, view all balances, or access the full transaction history.
+2. **Minting NFTs:**
+   - Users can mint new NFTs by providing a unique token ID and metadata.
+   - The system records the NFT creation and assigns ownership.
 
-3. **Decentralized and Transparent:**
+3. **Transferring NFTs:**
+   - NFT owners can transfer their NFTs to other addresses.
+   - The system updates ownership records and logs the transfer.
+
+4. **Inspecting Balances, NFTs, and Transactions:**
+   - Users can check individual address balances, view all balances, access the full transaction history, and query NFT data.
+
+5. **Decentralized and Transparent:**
    - All operations are handled in a decentralized environment using Cartesi's Rollups, ensuring transparency and trust.
 
 ## 🚀 Getting Started
@@ -27,76 +38,117 @@ Welcome to my Web3 project! This is a decentralized token transfer system built 
 
 - Node.js
 - Cartesi Development Environment
-- DockerDesktop
+- Docker Desktop
 
 ### Installation
 
 1. **Clone the Repository:**
 
-   ```bash
-   git clone https://github.com/yourusername/decentralized-token-transfer.git
-   cd decentralized-token-transfer```
-   
-   
+   ```git clone https://github.com/aeorck1/enhanced-nft-token-system.git
+   cd enhanced-nft-token-system
+   ```
 
 2. **Install Dependencies:**
-   ```npm install -g @cartesi/cli```
+   ```npm install -g @cartesi/cli
+   ```
 
-   **Test if Cartesi is succefully installed on your PC**
-   ```cartesi doctor```
-      ✔ Your system is ready for cartesi.
+   **Test if Cartesi is successfully installed on your PC:**
+   ```cartesi doctor
+   ```
+   You should see: ✔ Your system is ready for cartesi.
 
-3. **Run the Application:**
-   ```cartesi build```
+3. **Build the Application:**
+   ```cartesi build
+   ```
 
-3. **Run the Application:**
-   ```cartesi run```
+4. **Run the Application:**
+   ```
+   cartesi run
+   ```
 
-### 🛠️ Usage
+## 🛠️ Usage
 
-   **Transferring Tokens:**
+### Transferring Tokens:
 
-      Send a request to the app's /advance endpoint with transfer details encoded in hexadecimal.
-      Example:
+Send a request to the app's /advance endpoint with transfer details encoded in hexadecimal.
+Example:
 
-      jsonCopy{
-      "payload": "0x7b22746f223a22307831323334222c22616d6f756e74223a3130307d"  // Hexadecimal for {"to":"0x1234","amount":100}
-      }
+```json
+{
+  "payload": "0x7b2274797065223a227472616e73666572222c22746f223a22307831323334222c22616d6f756e74223a3130307d"
+}
+```
+(Hexadecimal for `{"type":"transfer","to":"0x1234","amount":100}`)
 
-   **Checking Balances:**
+### Minting NFTs:
 
-      Send a request to the app's /inspect endpoint with the payload "balances" or "balance:address".
-      Example:
+Send a request to mint a new NFT:
 
-      jsonCopy{
-      "payload": "0x62616c616e6365733a307831323334"  // Hexadecimal for "balances:0x1234"
-      }
+```json
+{
+  "payload": "0x7b2274797065223a226d696e745f6e6674222c22746f6b656e4964223a2231222c226d65746164617461223a7b226e616d65223a2245786368616e6765204e4654227d7d"
+}
+```
+(Hexadecimal for `{"type":"mint_nft","tokenId":"1","metadata":{"name":"Exchange NFT"}}`)
 
-   **Viewing Transaction History:**
+### Transferring NFTs:
 
-      Send a request to the app's /inspect endpoint with the payload "transactions".
+Send a request to transfer an NFT:
 
+```json
+{
+  "payload": "0x7b2274797065223a227472616e736665725f6e6674222c22746f223a22307831323334222c22746f6b656e4964223a2231227d"
+}
+```
+(Hexadecimal for `{"type":"transfer_nft","to":"0x1234","tokenId":"1"}`)
 
+### Checking Balances:
 
-### 🎯 Roadmap
+Send a request to the app's /inspect endpoint with the payload "balances" or "balance:address".
+Example:
 
-      Implement Token Minting: Allow creation of new tokens.
-      Add Token Burning Mechanism: Implement a way to remove tokens from circulation.
-      Introduce Staking: Develop a staking system for token holders.
-      Smart Contract Integration: Further decentralize the system by managing advanced features through smart contracts.
+```json
+{
+  "payload": "0x62616c616e6365733a307831323334"
+}
+```
+(Hexadecimal for "balances:0x1234")
 
-### 📄 License
+### Viewing Transaction History:
 
-      This project is licensed under the MIT License.
-      📢 Contributing
-      Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
-     
-     
-### 🌐 Connect with Me
+Send a request to the app's /inspect endpoint with the payload "transactions".
 
-      Whatsapp: https://wa.me/+2349069983946 
-      Twitter: @godwinfinity
-      GitHub: https://github.com/aeorck1
+### Querying NFT Data:
 
+Send a request to view all NFTs or a specific NFT:
 
-      Thank you for checking out my Web3 project! I'm excited to share this journey with you all. 🚀
+```json
+{
+  "payload": "0x6e6674733a31"
+}
+```
+(Hexadecimal for "nfts:1")
+
+## 🎯 Roadmap
+
+- Implement Token Minting: Allow creation of new tokens.
+- Add Token Burning Mechanism: Implement a way to remove tokens from circulation.
+- Introduce Staking: Develop a staking system for token holders.
+- Smart Contract Integration: Further decentralize the system by managing advanced features through smart contracts.
+- NFT Marketplace: Develop a decentralized marketplace for trading NFTs.
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 📢 Contributing
+
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+
+## 🌐 Connect with Me
+
+- WhatsApp: https://wa.me/+2349069983946 
+- Twitter: @godwinfinity
+- GitHub: https://github.com/aeorck1
+
+Thank you for checking out this enhanced Web3 project! I'm excited to share this journey with you all. 🚀
