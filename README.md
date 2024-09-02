@@ -1,3 +1,7 @@
+Here’s how you can incorporate the "Running Features with Cartesi" section into your `README.md` file:
+
+---
+
 # 🚀 Enhanced NFT and Token Transfer System on Cartesi
 
 Welcome to my Web3 project! This is a decentralized system built on top of Cartesi, enabling users to transfer tokens, mint and transfer NFTs, check balances, and view transaction history in a fully decentralized manner.
@@ -44,90 +48,109 @@ Welcome to my Web3 project! This is a decentralized system built on top of Carte
 
 1. **Clone the Repository:**
 
-   ```git clone https://github.com/aeorck1/enhanced-nft-token-system.git
+   ```
+   git clone https://github.com/aeorck1/enhanced-nft-token-system.git
    cd enhanced-nft-token-system
    ```
 
 2. **Install Dependencies:**
-   ```npm install -g @cartesi/cli
+
+   ```
+   npm install -g @cartesi/cli
    ```
 
    **Test if Cartesi is successfully installed on your PC:**
-   ```cartesi doctor
+
    ```
+   cartesi doctor
+   ```
+
    You should see: ✔ Your system is ready for cartesi.
 
 3. **Build the Application:**
-   ```cartesi build
+
+   ```
+   cartesi build
    ```
 
 4. **Run the Application:**
+
    ```
    cartesi run
    ```
 
 ## 🛠️ Usage
 
-### Transferring Tokens:
+### Running Features with Cartesi
 
-Send a request to the app's /advance endpoint with transfer details encoded in hexadecimal.
-Example:
+To run the features of this project using Cartesi, follow these steps:
 
-```json
-{
-  "payload": "0x7b2274797065223a227472616e73666572222c22746f223a22307831323334222c22616d6f756e74223a3130307d"
-}
-```
-(Hexadecimal for `{"type":"transfer","to":"0x1234","amount":100}`)
+#### Token Transfers
 
-### Minting NFTs:
+1. Open a terminal and navigate to the project directory.
+2. Run `cartesi run` to start the Cartesi environment.
+3. Use the `cartesi exec` command to send a request to the app's `/advance` endpoint with transfer details encoded in hexadecimal. Example:
 
-Send a request to mint a new NFT:
+   ```
+   cartesi exec --payload "0x7b2274797065223a227472616e73666572222c22746f223a22307831323334222c22616d6f756e74223a3130307d"
+   ```
 
-```json
-{
-  "payload": "0x7b2274797065223a226d696e745f6e6674222c22746f6b656e4964223a2231222c226d65746164617461223a7b226e616d65223a2245786368616e6765204e4654227d7d"
-}
-```
-(Hexadecimal for `{"type":"mint_nft","tokenId":"1","metadata":{"name":"Exchange NFT"}}`)
+   This will transfer tokens to the specified address.
 
-### Transferring NFTs:
+#### Minting NFTs
 
-Send a request to transfer an NFT:
+1. Run `cartesi run` to start the Cartesi environment.
+2. Use the `cartesi exec` command to send a request to mint a new NFT:
 
-```json
-{
-  "payload": "0x7b2274797065223a227472616e736665725f6e6674222c22746f223a22307831323334222c22746f6b656e4964223a2231227d"
-}
-```
-(Hexadecimal for `{"type":"transfer_nft","to":"0x1234","tokenId":"1"}`)
+   ```
+   cartesi exec --payload "0x7b2274797065223a226d696e745f6e6674222c22746f6b656e4964223a2231222c226d65746164617461223a7b226e616d65223a2245786368616e6765204e4654227d7d"
+   ```
 
-### Checking Balances:
+   This will mint a new NFT with the specified metadata.
 
-Send a request to the app's /inspect endpoint with the payload "balances" or "balance:address".
-Example:
+#### Transferring NFTs
 
-```json
-{
-  "payload": "0x62616c616e6365733a307831323334"
-}
-```
-(Hexadecimal for "balances:0x1234")
+1. Run `cartesi run` to start the Cartesi environment.
+2. Use the `cartesi exec` command to send a request to transfer an NFT:
 
-### Viewing Transaction History:
+   ```
+   cartesi exec --payload "0x7b2274797065223a227472616e736665725f6e6674222c22746f223a22307831323334222c22746f6b656e4964223a2231227d"
+   ```
 
-Send a request to the app's /inspect endpoint with the payload "transactions".
+   This will transfer the specified NFT to the new owner.
 
-### Querying NFT Data:
+#### Checking Balances
 
-Send a request to view all NFTs or a specific NFT:
+1. Run `cartesi run` to start the Cartesi environment.
+2. Use the `cartesi exec` command to send a request to the app's `/inspect` endpoint with the payload "balances" or "balance:address". Example:
 
-```json
-{
-  "payload": "0x6e6674733a31"
-}
-```
-(Hexadecimal for "nfts:1")
+   ```
+   cartesi exec --payload "0x62616c616e6365733a307831323334"
+   ```
+
+   This will return the balance of the specified address.
+
+#### Viewing Transaction History
+
+1. Run `cartesi run` to start the Cartesi environment.
+2. Use the `cartesi exec` command to send a request to the app's `/inspect` endpoint with the payload "transactions":
+
+   ```
+   cartesi exec --payload "0x7472616e73616374696f6e7322"
+   ```
+
+   This will return the transaction history.
+
+#### Querying NFT Data
+
+1. Run `cartesi run` to start the Cartesi environment.
+2. Use the `cartesi exec` command to send a request to view all NFTs or a specific NFT:
+
+   ```
+   cartesi exec --payload "0x6e6674733a31"
+   ```
+
+   This will return the metadata of the specified NFT.
 
 ## 🎯 Roadmap
 
@@ -152,3 +175,4 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 - GitHub: https://github.com/aeorck1
 
 Thank you for checking out this enhanced Web3 project! I'm excited to share this journey with you all. 🚀
+
